@@ -26,26 +26,25 @@ def my_handler(sender, **kwargs):
 
 IGNORELIST = (
     'AuditLogEntry',
-    'HttpRequestLogEntry',
+    'RequestContentMiddleware',
     'LogEntry', #django admin app
 )
 
 
 @receiver(post_save, sender=Presentation)
-@receiver(post_save, sender=RequestContent)
+#@receiver(post_save, sender=RequestContent)
 def AuditLogger(sender, **kwargs):
     '''
     Logger Stores CRUD actions related to model instances
     depending on ENABLE_AUDIT setting
-
-    if not getattr(settings, 'ENABLE_AUDIT', False):
-        return
     '''
 
     if not getattr(settings, 'ENABLE_AUDIT', False):
+        print("ENABLE_AUDIT False")
         return
 
     if sender._meta.object_name in IGNORELIST:
+        print("IGNORELIST")
         return
 
     print("Request post_save signals.py!")
