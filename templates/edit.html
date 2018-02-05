@@ -2,12 +2,25 @@
 
 {% block content %}
 
-    <h1>New post</h1>
+    <h2>Task 4</h2>
+    <div>
+        Create page with form that allows to edit data, presented on the main page.
+        <ul>
+            <li>Add authentication to this page</li>
+            <li>Add ability to upload, view and change photo</li>
+        </ul>
+    </div>
+    <h2>Task 5</h2>
+    <div>
+        For birth date on the same page add calendar widget. Create your own django widget.
+    </div>
+    <br/>
+    <br/>
     <form method="POST" enctype="multipart/form-data" class="post-form form-horizontal">{% csrf_token %}
         <fieldset>
 
             <!-- Form Name -->
-            <legend>Form Name</legend>
+            <legend>Редактирование данных</legend>
 
             <!-- Text input-->
             <div class="form-group">
@@ -75,78 +88,4 @@
         </fieldset>
     </form>
 
-    <form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
-
 {% endblock %}
-
-<form class="form-horizontal">
-<fieldset>
-
-<!-- Form Name -->
-<legend>Form Name</legend>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Имя</label>
-  <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Фамилия</label>
-  <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-  </div>
-</div>
-
-<!-- Textarea -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textarea">Биография</label>
-  <div class="col-md-4">
-    <textarea class="form-control" id="textarea" name="textarea"></textarea>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Телефон</label>
-  <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Скайп</label>
-  <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-
-  </div>
-</div>
-
-<!-- File Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="filebutton">Фото</label>
-  <div class="col-md-4">
-    <input id="filebutton" name="filebutton" class="input-file" type="file">
-  </div>
-</div>
-
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
-  <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Отправить</button>
-  </div>
-</div>
-
-</fieldset>
-</form>

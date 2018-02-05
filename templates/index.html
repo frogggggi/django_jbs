@@ -2,11 +2,22 @@
 {% load editlink %}
 
 {% block login %}
-    {% if username %}
-        <li><a href="/auth/logout/">Выйти ({{ username }})</a></li>
-    {% else %}
-        <li><a href="/auth/login/">Войти {{ request.user }}</a></li>
-    {% endif %}
+    <h2>Task 4</h2>
+    <div>
+        Create page with form that allows to edit data, presented on the main page.
+        <ul>
+            <li>Add authentication to this page</li>
+            <li>Add ability to upload, view and change photo</li>
+        </ul>
+    </div>
+    <br/>
+    <ul>
+        {% if username %}
+            <li><a href="/auth/logout/" style="font-size: 18px;">Выйти ({{ username }})</a></li>
+        {% else %}
+            <li><a href="/auth/login/" style="font-size: 18px;">Войти {{ request.user }}</a></li>
+        {% endif %}
+    </ul>
 {% endblock %}
 
 
@@ -16,9 +27,9 @@
 -->
 
 {% block content %}
-    {% editlink %}
-<h3>Данные
 
+
+<h3>Данные
     {% if username %}
         <a class="btn btn-default" href="{% url 'post_edit' %}">
         <span class="glyphicon glyphicon-pencil"></span></a>
@@ -41,6 +52,11 @@
     {% endif %}
     </div>
 
+
+
+    <h2>Task 3</h2>
+    <div>Create template­context­processor that adds django.settings to the context.</div>
+
     <h4>TEMPLATE_CONTEXT_PROCESSORS:</h4>
 
 
@@ -51,16 +67,42 @@
     {{ response_dict }}<br/>
 
 
+    <h2>Task 6</h2>
     <div>
+        Create template tag that accepts any object and renders the link
+        to its admin edit page (e.g { % edit_link request.user % }).
+    </div>
+
+    {% editlink %}
+
+<br/>
+<br/>
+    <div>
+        <h2>Task 2</h2>
+        <div>
+            Create middleware that stores all http requests into the database. Also, on a separate page show first
+            10 http requests that are stored by middleware.
+        </div>
+        <br>
         <h4>HTTP-запросы в БД:</h4>
         <ul>
-            <li><a href="/requests/">request</a></li>
+            <li><a href="/requests/" style="font-size: 18px;">request</a></li>
         </ul>
     </div>
 </div>
 
+<br/>
+<br/>
 
+<h2>Task 7</h2>
+<div>Create django management command that prints all project models and the count of objects in every
+model. Also:<br/>
+● Duplicate output to STDERR with prefix "error: "<br/>
+● Write a bash script which executes your command and saves output of stderr into file. <br/>
+    File name should be “< current date >.log”</div>
+<br/>
+<b>write this command in terminal:
+./manage.py managecomand</b>
 
-
-
+<br/><br/><br/><br/>
 {% endblock %}

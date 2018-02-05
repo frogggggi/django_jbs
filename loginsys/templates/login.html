@@ -2,6 +2,8 @@
 
 {% block login %}
     <div class="large-offset-3 large-6 columns">
+        <h2>Авторизируйтесь</h2>
+        <p>демо логин: admin <br/>демо пароль: 1111</p>
         <form action="/auth/login/" method="post">
             {% csrf_token %}
             <label for="username">Имя пользователя</label>
