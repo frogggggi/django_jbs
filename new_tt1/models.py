@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from datetime import datetime, date, time
-from django.utils.image import Image
+#from django.utils.image import Image
 
 
 class Presentation(models.Model):

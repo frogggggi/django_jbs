@@ -1,19 +1,79 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, render, redirect
-from .models import Presentation, RequestContent
+from .models import Presentation, RequestContent, AuditLogEntry
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.conf import settings
 from .forms import PresentationForm
 from django.contrib import auth
-from django.http import Http404
 from django.db.models import get_model
+from django.http import Http404
+#from django.db.models import get_model
 from django.views.generic import ListView
 from django.test.client import RequestFactory
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+'''
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=RequestContent)
+def my_handler(sender, **kwargs):
+    print("Request post_save!")
+
+'''
+
+IGNORELIST = (
+    'AuditLogEntry',
+    'HttpRequestLogEntry',
+    'LogEntry', #django admin app
+)
 
 
+@receiver(post_save, sender=Presentation)
+@receiver(post_save, sender=RequestContent)
+def AuditLogger(sender, **kwargs):
+    '''
+    Logger Stores CRUD actions related to model instances
+    depending on ENABLE_AUDIT setting
 
+    if not getattr(settings, 'ENABLE_AUDIT', False):
+        return
+    '''
+
+    if not getattr(settings, 'ENABLE_AUDIT', False):
+        return
+
+    if sender._meta.object_name in IGNORELIST:
+        return
+
+    print("Request post_save signals.py!")
+    print(kwargs)
+    print(kwargs.get('instance'))
+
+    action = AuditLogEntry.ACTION_DELETE
+
+    if kwargs.has_key('created'):
+        #created is True if a new record was created https://docs.djangoproject.com/en/dev/ref/signals/#post-save
+        action = kwargs.get('created') and AuditLogEntry.ACTION_CREATE or AuditLogEntry.ACTION_UPDATE
+        print("created is True")
+
+    '''
+    AuditLogEntry.objects.get_or_create(name=kwargs.get('instance'))
+    AuditLogEntry.objects.create(
+        model=sender._meta.object_name,
+        instance=unicode(kwargs.get('instance')),
+        action=sender)
+    '''
+    AuditLogEntry1 = get_model('new_tt1', 'AuditLogEntry')
+
+    request_log1 = AuditLogEntry1(
+        model=sender._meta.object_name,
+        instance=unicode(kwargs.get('instance')),
+        action=action
+    )
+    request_log1.save()
 
 
 def requestContetnView(ListView):

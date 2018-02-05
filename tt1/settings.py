@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Django settings for tt1 project.
 
@@ -7,7 +9,6 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import sys, os.path
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -24,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ENABLE_HTTP_REQUEST_LOGGING = True
+ENABLE_HTTP_REQUEST_LOGGING = False
 ENABLE_AUDIT = True
 
 ALLOWED_HOSTS = []
@@ -48,6 +49,7 @@ INSTALLED_APPS = (
     'south',
     'loginsys',
     'myhttprequests',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,3 +139,18 @@ STATICFILES_FINDERS = (
 )
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+# адрес redis сервера
+BROKER_URL = 'redis://localhost:6379/0'
+# храним результаты выполнения задач так же в redis
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# в течение какого срока храним результаты, после чего они удаляются
+CELERY_TASK_RESULT_EXPIRES = 7*86400  # 7 days
+# это нужно для мониторинга наших воркеров
+CELERY_SEND_EVENTS = True
+# место хранения периодических задач (данные для планировщика)
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
+# в конец settings.py добавляем строчки
+import djcelery
+djcelery.setup_loader()
