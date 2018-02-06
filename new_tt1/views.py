@@ -47,7 +47,7 @@ def AuditLogger(sender, **kwargs):
         print("IGNORELIST")
         return
 
-    print("Request post_save signals.py!")
+    print("Request post_save!")
     print(kwargs)
     print(kwargs.get('instance'))
 

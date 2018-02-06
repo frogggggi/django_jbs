@@ -50,7 +50,13 @@ INSTALLED_APPS = (
     'loginsys',
     'myhttprequests',
     'djcelery',
+    'djkombu',
 )
+
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = "django://"
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -144,6 +150,8 @@ STATICFILES_FINDERS = (
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+
+'''
 # адрес redis сервера
 BROKER_URL = 'redis://localhost:6379/0'
 # храним результаты выполнения задач так же в redis
@@ -158,3 +166,11 @@ CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 # в конец settings.py добавляем строчки
 import djcelery
 djcelery.setup_loader()
+
+# REDIS related settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+'''
